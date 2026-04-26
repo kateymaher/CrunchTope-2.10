@@ -841,12 +841,16 @@ DO i = 1,ncomp
   IF (nx == 1) GO TO 500
   
   IF (jx == 1 .AND. netflowx(0,jy,jz) > 0.0) THEN
-    IF (jc(1) == 2 .or. JcByGrid(jx-1,jy,jz) /= 1) THEN
+    IF (jc(1) /= 1 .and. JcByGrid(jx-1,jy,jz) /= 1) THEN
       xbdflux = a(jx,jy,jz)*scw(i)
+    ELSE
+      xbdflux = 0.0d0
     END IF
   ELSE IF (jx == nx .AND. netflowx(jx,jy,jz) < 0.0) THEN
-    IF (jc(2) == 2 .or. JcByGrid(jx+1,jy,jz) /= 1) THEN
+    IF (jc(2) /= 1 .and. JcByGrid(jx+1,jy,jz) /= 1) THEN
       xbdflux = c(jx,jy,jz)*sce(i)
+    ELSE
+      xbdflux = 0.0d0
     END IF
   ELSE
     xbdflux = 0.0
@@ -856,12 +860,16 @@ DO i = 1,ncomp
   IF (ny == 1) GO TO 600
   
   IF (jy == 1 .AND. qy(jx,0,jz) > 0.0) THEN
-    IF (jc(3) == 2 .or. JcByGrid(jx,jy-1,jz) /= 1) THEN
+    IF (jc(3) /= 1 .and. JcByGrid(jx,jy-1,jz) /= 1) THEN
       ybdflux = f(jx,jy,jz)*scs(i)
+    ELSE
+      ybdflux = 0.0d0
     END IF
   ELSE IF (jy == ny .AND. qy(jx,ny,jz) < 0.0) THEN
-    IF (jc(4) == 2 .or. JcByGrid(jx,jy+1,jz) /= 1) THEN
+    IF (jc(4) /= 1 .and. JcByGrid(jx,jy+1,jz) /= 1) THEN
       ybdflux = d(jx,jy,jz)*scn(i)
+    ELSE
+      ybdflux = 0.0d0
     END IF
   ELSE
     ybdflux = 0.0
